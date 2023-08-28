@@ -8,6 +8,80 @@ El lenguaje es dinámicamente tipado y soporta múltiples paradigmas de programa
 
 > Este tutorial supone que el lector ya sabe programar en otro lenguaje. No es un tutorial exhaustivo, solo introduce algunos de los conceptos de base que se consideraron necesarios para poder empezar a usar Python. La [documentación](https://docs.python.org/3/) es extensa y deberá ser revisada cuidadosamente si se desea obtener un conocimiento completo del lenguaje.
 
+---
+# Contenido
+
+### Sesión 1
+
+- Entorno, instalación, configuración y ejecución
+    - Python, Conda, VSCode, Google Colab
+    - paquetes/librerías
+    - imports
+
+### Sesión 2
+
+- Sintaxis
+    - Instrucciones, indentación, comentarios
+- Datos
+    - Identificadores
+    - Variables: declaración, asignación
+    - Tipos de datos, números, strings y strings formateadas
+- Colecciones
+    - Listas, tuplas, sets, diccionarios
+    - índices, rebanadas
+
+### Sesión 3
+
+- Estructuras de control
+    - If..., match, while, for
+    - ranges
+- Archivos
+    - lectura,escritura, ...
+
+### Sesión 4
+
+- Funciones
+    - definición y declaración
+    - parámetros: variables, optativos, nombrados
+    - alcance
+    - lambdas
+- Excepciones
+
+### Sesión 5
+
+- Clases y objetos
+    - constructores
+    - campos, métodos, alcance
+    - Fundamentos básicos de herencia
+
+### Sesión 6
+
+- Ejercicios para consolidar lo visto anteriormente
+
+### Sesión 7
+
+- Fundamentos de Sockets TCP
+    - clientes, servidores
+
+### Sesión 8
+
+- HTTP
+    - http.server (cgi)
+    - Fundamentos básicos de Flask
+
+### Sesión 9
+
+- Fundamentos de HTML
+- Fundamentos básicos de CSS
+
+### Sesión 10
+
+- BDD (NoSQL)
+    - Json
+    - TinyDB
+    - Fundamentos básicos de  Redis
+---
+
 ## Instalación y ejecución
 
 Puede instalarse rápidamente utilizando los instaladores oficiales en https://www.python.org/downloads/.
@@ -235,3 +309,304 @@ if __name__ = "__main__":
 ```
 
 Lo que se encuentra dentro de esta estructura `if __name__ = "__main__":`, sólo se ejecutará si el archivo se invoca directamente, como por ejemplo desde la consola con `python3 hola.py`, y nunca al importarlo como módulo.
+
+******
+
+## Sintaxis
+
+### Instrucciones, líneas y comentarios
+
+Un programa Python está dividido en líneas, y salvo ciertos casos, una instrucción (statement) debe encontrarse en una sola línea. Ciertas instrucciones compuestas como *if* y *for* ocuparán de manera natural varias líneas.
+
+Si alguna instrucción de una línea necesita dividirse en varias líneas, puede usarse el backslash `\`:
+
+```python
+... dia > 1 \ 
+and hora < 12 \ 
+and ...
+```
+
+Para ingresar comentarios se usa el símbolo de numeral `#`. Un comentario puede encontrarse al final de una línea, salvo cuando esta termina en `\`.
+
+### Indentación
+
+La indentación es fundamental en Python, no solo para facilitar la visualización sino para determinar la agrupación de instrucciones o bloques. Para indentar se usa espacios o tabulaciones, pero se debe tener mucho cuidado al mezclarlas en un mismo archivo ya que puede generar errores si se lo hace de manera inconsistente. En general se recomienda usar espacios.
+
+La primera línea de un archivo de código no puede estar indentada, y el número de espacios en un bloque de código debe ser consistente.
+
+Un pequeño ejemplo:
+
+```python
+i = 1
+while(i <= 2): # bloque i
+    print("El valor de i es " + str(i))
+    i = i + 1
+    j = 1
+    while(j <= 2): # bloque j
+        print("El valor de j es " + str(j))
+        j = j + 1
+    k = 1
+    while(k <= 2): # bloque k
+        print("El valor de k es " + str(k))
+        k = k + 1
+l = 1
+while(l <= 2): # bloque l
+    print("El valor de l es " + str(l))
+    l = l + 1    
+```
+
+Si ejecuta este ejemplo obtendrá:
+
+```
+El valor de i es 1
+El valor de j es 1
+El valor de j es 2
+El valor de k es 1
+El valor de k es 2
+El valor de i es 2
+El valor de j es 1
+El valor de j es 2
+El valor de k es 1
+El valor de k es 2
+El valor de l es 1
+El valor de l es 2
+```
+
+> Los bloques j y k se encuentran dentro del bloque i, pero son independientes entre ellos: se encuentran al mismo nivel. Los bloques i y l también son independientes entre ellos al encontrarse al mismo nivel
+
+Los bloques `while` del ejemplo anterior están todos correctamente indentados. A continuación un ejemplo mal indentado que emitiría un error:
+
+```python
+i = 1
+while(i <= 2):
+print("El valor de i es " + str(i))
+i = i + 1
+```
+
+El error sería:
+
+```
+line 3
+    print("El valor de i es " + str(i))
+    ^
+IndentationError: expected an indented block after 'while' statement on line 2
+```
+
+ Otro ejemplo de mala indentación:
+
+```python
+i = 1
+while(i <= 2):
+  print("El valor de i es " + str(i))
+    i = i + 1
+```
+
+El error sería:
+
+```
+line 4
+    i = i + 1
+IndentationError: unexpected indent
+```
+
+### Identificadores y variables
+
+Los identificadores de métodos, variables, clases, etc., pueden utilizar los caracteres: A-Z a-z _ y 0-9 (pero 0-9 no puede ser el primer caracter!)
+
+> El sistema define indicadores que inician y terminan con doble guión bajo `__*__`, razón por la que se desaconseja usar este patrón (podría colgar la ejecución).
+
+Las variables se crean la primera vez que se usan en el código y no hace falta ninguna declaración explícita. Al ser un lenguaje dinámicamente tipado, una variable pueden recibir cualquier tipo de valor en cualquier momento. Se puede usar asignamiento múltiple de variables en una instrucción:
+
+```python
+# asignamiento simple
+a = 1
+# asignamiento múltiple
+a, b, c = 1, 2, 3 #a = 1, b = 2, c = 3
+```
+
+## Tipos de datos
+
+Los tipos de datos integrados (built-in) son:
+
+```
+Texto: str
+Nméricos: int, float, complex
+Colecciones: list, tuple, range
+Mapping Type: dict
+Set Types: set, frozenset
+Boolean Type: bool
+Binary Types: bytes, bytearray, memoryview
+```
+
+Se puede obtener el tipo del dato en una variable con `type(<variable>)`
+
+### Strings
+
+Las cadenas de texto o strings, pueden representarse sea dentro de comillas simples(`'...'`) o dobles (`"..."`); se recomienda preferir las comillas simples.
+
+Esta flexibilidad es bienvenida cuando es necesario incluir en el texto comillas simples o dobles, dado que podremos evitar usar caracteres de escape, que pueden volver al texto difícil de leer.
+
+- Si se necesita comillas dobles incluidas en el texto, entonces la string estará dentro de comillas simples: `'Necesito "dobles" en el texto'` --> Necesito "dobles" en el texto
+
+- Si se necesita comillas simples incluidas en el texto, entonces la string estará dentro de comillas dobles: `"Necesito 'simples' en el texto"` --> Necesito 'simples' en el texto
+
+Las strings también pueden presentarse en múltiples líneas, para lo que se usa comillas triples (sean simples o dobles):
+
+```python
+a = '''Estoy
+en múltiples
+líneas'''
+
+// ó...
+
+b = """Estoy
+en múltiples
+líneas"""
+
+```
+Para concatenar strings o valores en general, cuando estos están en variables, hay varias alternativas:
+
+- la clásica, utilizando el '+': `'uno ' + 'dos ' + 'tres'` --> uno dos tres
+
+- simplemente poniendo las strings juntas: `'uno ' 'dos ' 'tres'` --> uno dos tres
+> Esta opción no funciona con variables !
+
+- utilizar strings "formateadas", las cuales permiten sobretodo inyectar fácilmente dentro de una string el valor de variables. La string se debe definir con el prefijo f: `f'Esta en una string formateada'`. Dentro de la string se puede incrustar variables dentro de símbolos de llaves: `f'Nombre: {fName}, Apellido: {lName}`. Ej:
+
+```python
+fName = 'Diego'
+lName = 'Ordóñez'
+print(f'Nombre: {fName}, Apellido: {lName}')
+# Produce: Nombre: Diego, Apellido: Ordóñez
+```
+
+### Listas
+
+Es una de las colecciones más usadas y flexibles. Admiten cualquier tipo de elemento, puede haber elementos duplicados, y los elementos mantienen el orden en que fueron ingresados. Una lista puede modificarse en cualquier momento. Se puede acceder a los elementos por índice y se puede extraer una rebanada (slice) de una lista. Para crear una lista se usa corchetes:
+
+```python
+a = [1, 2, 'a', 'x']
+```
+> En Python no hay arreglos, se usan las listas.
+
+Algunas operaciones relevantes en una lista pueden ser:
+
+- para saber cuántos elementos hay en una lista se puede usar `len(<lista>)`
+- para añadir un elemento al final de la lista se usa `<lista>.append(<elemento>)`
+- para insertar un elemento en un cierto índice se usa `<lista>.insert(<índice>, <elemento>)`
+- para añadir una colección al final de una lista se usa `<lista>.extend(<colección>)`
+- para recuperar y quitar el elemento al final de la lista se usa `<lista>.pop()`. Si añade un índice a pop puede hacerlo con cualquier elemento. Para retirar el primero de la lista usaría `pop(0)`
+
+> Si analiza estas operaciones, verá que facilmente se puede usar una lista como un stack o una cola.
+
+> OJO: si su colección tiene un solo elemento, es necesario definirla con una coma final, para que no haya confusiones con otro tipo de expresiones. Ej: `a = [1,]`. Esto aplica para todo tipo de colecciones: lista, tupla, ...
+
+#### Indices y rebanadas (slice)
+
+Se puede acceder a los caracteres de una colección en general, strings incluidas, por índice. Si se usa valores negativos como índice se puede acceder desde el último elemento o caracter:
+
+```python
+a = 'Diego' # o, por ejemplo: a = ['D', 'i', 'e', 'g', 'o']
+a[0] # D
+a[1] # i
+a[-1] # o
+a[-2] # g
+```
+
+Este ejemplo indica los índices de todos los elementos de una lista, tanto en positivo como negativo:
+```
+ +---+---+---+---+---+
+ | D | i | e | g | o |
+ +---+---+---+---+---+
+   0   1   2   3   4   
+  -5  -4  -3  -2  -1
+```
+
+Se puede también "rebanar" una parte de una colección o string:
+
+```python
+a = 'Diego'
+a[:] # Diego
+a[1:3] # ie
+a[:3] # Die
+a[2:] # ego
+a[-2:] # go
+a[:-2] # Die
+```
+
+Especificando:
+- el primer elemento, antes de `:` es el índice del inicio (*start*) de la rebanada
+    > *start* incluye o inicia desde el índice indicado. Si no se pone nada se asume el primer elemento
+- el segundo elemento, luego de `:` es el índice del final (*stop*) de la rebanada.
+    > *stop* NO incluye o no llega hasta el índice indicado. Si no se pone nada se asume el último elemento incluido
+
+Las rebanadas pueden tener también un tercer parámetro (*step*) que permite definir si nos "saltaremos" algunos elementos de la rebanada, o el orden en que se toman. El valor por defecto es 1, que indica que tomamos todos los elementos en el orden típico izquierda-derecha
+```python
+a = 'Diego'
+a[::] # Diego
+a[0:5:1] # Diego
+a[0:5:2] # Deo
+a[1:5:3] # io
+```
+
+Si *step* es negativo cambiamos el orden en que se recogen los elementos de la rebanada, de derecha a izquierda.
+> Se verá, sin embargo, que algunos casos pueden resultar poco claros
+```python
+a = 'Diego'
+a[::-1] # ogeiD (típico para invertir una lista)
+a[::-2] # oeD
+a[0::-1] # D
+a[0:5:-1] # ''
+a[5:0:-1] # 'ogei'
+a[5::-1] # 'ogeiD'
+a[-1:-6:-1] # ogeiD
+```
+
+> Esto aplica para todo tipo de colecciones indexadas como string (colección de caracteres), lista y tupla.
+
+---
+**Ejercicios**
+
+- Ejecute todos los ejemplos de rebanadas para confirmar que son correctos
+- A partir de la siguiente colección:
+    - `a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]`
+- ...cómo puede obtener esta nueva colección:
+    - `[1, 3, 5, 7, 9, 20, 18, 16, 14, 12]`
+---
+
+### Tuplas
+
+Son colecciones inmutables: es como una lista, pero una vez creada no se puede cambiar nada. Para crear una tupla (tuple) se usa paréntesis:
+
+```python
+a = (1, 2, 'a', 'x')
+```
+
+### Sets
+
+Son colecciones que no admiten duplicados y que no garantizan ningún orden. No se puede acceder a sus elementos por índice y no se pueden modificar, pero se admite añadir y eliminar elementos. Para crear un set se usa llaves:
+
+```python
+a = {1, 2, 'a', 'x'}
+```
+
+### Diccionarios (Mapas)
+
+Los diccionarios o mapas permiten guardar elementos en pares clave:valor. La clave permiten recuperar un valor y no se puede tener claves duplicadas. Los elementos pueden modificarse, añadirse o eliminarse. Para crear un diccionario se usa llaves:
+
+```python
+a = {"nombre": "Diego", "apellido": "Ordóñez", "id": 1234}
+a["id"] # 1234
+a["id"] = 5678 # ahora id = 5678
+a["otro"] = "nuevo" # añade el elemento "otro":"nuevo"
+a.pop("apellido") # elimina el elemento "apellido":"Ordóñez"
+```
+
+---
+**Ejercicios**
+
+- A partir del siguiente diccionario:
+    - `d = {'a':1, 'b':2, 'c':3, 'd':4, 'e':5, 'f':6}`
+- ... obtenga este diccionario:
+    - `{'a': 1, 'b': 9, 'd': 4, 'e': 5, 'f': 6, 'g': 8}`
+---
