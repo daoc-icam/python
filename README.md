@@ -650,6 +650,20 @@ else:
     <bloque-else>
 ```
 
+```python
+# Cambie el valor de num y pruebe
+num = 1
+if num == 1 :
+    print('uno')
+elif num == 2 :
+    print('dos')
+elif num == 3:
+    print('tres')
+else :
+    print('otro número')
+
+```
+
 ### Match
 
 Equivalente a *switch* en otros lenguajes:
@@ -667,6 +681,21 @@ match <variable>:
 
 > El guión bajo en el case final captura cualquier valor, es el caso por defecto!
 
+```python
+# Cambie el valor de num y pruebe
+num = 1
+match num :
+    case 1:
+        print('uno')
+    case 2:
+        print('dos')
+    case 3:
+        print('tres')
+    case _ :
+        print('otro número')
+
+```
+
 ### While
 
 `while` toma la forma:
@@ -676,6 +705,14 @@ while <condición>:
     <bloque-while-true>
 ```
 
+```python
+i = 0
+j = 5
+while i < j:    
+    print(f'paso {i+1} de {j}')
+    i = i + 1
+```
+
 ### For
 
 `for` se usa para iterar sobre una colección y su forma de base es:
@@ -683,6 +720,11 @@ while <condición>:
 ```python
 for <variable> in <colección>:
     <bloque-por-cada-elemento>
+```
+
+```python
+for i in [1, 2, 3, 4, 5]:
+    print(f'paso {i} de 5')
 ```
 
 `break` se usa para terminar el lazo en cualquier momento:
@@ -713,6 +755,11 @@ for <variable> in range(ini, fin, salto):
     <bloque-por-cada-elemento>
 ```
 
+```python
+for i in range(1, 6):
+    print(f'paso {i} de 5')
+```
+
 Ejemplos de colecciones producidas con range:
 
 ```python
@@ -732,7 +779,107 @@ else:
 > si el lazo finaliza por un `break`, no se ejecuta el `else`
 
 ---
-**Ejercicio:**
+**Ejercicios**
 
 Cree un programa que permita adivinar un número entre 1 y 100. El programa genera un número aleatorio y el usuario debe ingresar el número adecuado por el terminal. El programa emitirá mensajes de ayuda como "muy alto", "muy bajo" o "adivinó !!!".
+
+> Puede resultarle muy útil las funciones: 
+> - [input()](https://www.w3schools.com/python/ref_func_input.asp)
+> - [randint()](https://www.w3schools.com/python/ref_random_randint.asp)
+
+---
+
+## Archivos
+
+Los archivos son la principal manera de guardar información a largo plazo, de manera que es esencial saber procesarlos.
+
+Para trabajar con un archivo primero hay que abrirlo, y para ello existen cuatro modos básicos:
+
+- `r`, read o lectura, que no modifica el archivo
+- `w`, write o escritura, que reemplaza el contenido del archivo
+- `a`, append o añadir, que añade contenido al final del archivo (es solo un modo más de escritura)
+- `x`, exclusive o creación exclusiva
+
+### Crear archivos
+
+Un archivo se crea y guarda, inicialmente, en el disco duro de su equipo. Para crearlos ábralos en modo exclusivo, de esta manera si ya existe un archivo con dicho nombre, habrá un error, en lugar de reemplazar el archivo. Cuando ya no use el archivo ciérrelo.
+
+```python
+file = open('nuevo.txt', 'x')
+file.close()
+```
+
+> Si abre el archivo en modo escritura también se creará si no existe
+
+### Leer archivos
+
+Los archivos no son más que una colección de bytes o caracteres. Los archivos de texto se abren en modo lectura así:
+
+```python
+reader = open('dog_breeds.txt', 'r')
+```
+
+y luego se leen, por ejemplo:
+
+```python
+# todo el archivo de una sola
+a = reader.read()
+reader.close()
+print(a)
+```
+
+```python
+# línea por línea
+line = None
+while line != '':
+    line = reader.readline()
+    print(line)
+reader.close()
+```
+
+```python
+# todas las líneas, dentro de una lista
+lines = reader.readlines()
+reader.close()
+print(lines)
+```
+
+### Escribir en un archivo
+
+Abra el archivo en modo escritura:
+
+```python
+writer = open('nuevo.txt', 'w')
+```
+
+y escriba en él usando el método `write` cuantas veces sea necesario:
+
+```python
+writer.write('Hola ')
+writer.write('mundo !')
+writer.close()
+```
+
+---
+**Ejercicios**
+
+Abra el archivo *antes.txt*, cuyo contenido es:
+```
+12345
+67890
+12345
+67890
+```
+
+modifiquelo para que su contenido sea:
+
+```
+09876
+54321
+09876
+54321
+```
+
+Y guárdelo en el archivo *despues.txt*
+
 ---
