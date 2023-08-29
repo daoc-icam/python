@@ -871,7 +871,7 @@ Abra el archivo *antes.txt*, cuyo contenido es:
 67890
 ```
 
-modifiquelo para que su contenido sea:
+modifíquelo para que su contenido sea:
 
 ```
 09876
