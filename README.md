@@ -304,11 +304,13 @@ def miFuncion1():
 def miFuncion2():
     print('Estoy en miFuncion2')
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     print('Estoy en el módulo hola.py')
 ```
 
-Lo que se encuentra dentro de esta estructura `if __name__ = "__main__":`, sólo se ejecutará si el archivo se invoca directamente, como por ejemplo desde la consola con `python3 hola.py`, y nunca al importarlo como módulo.
+Lo que se encuentra dentro de esta estructura 
+```if __name__ == "__main__":```
+sólo se ejecutará si el archivo se invoca directamente, como por ejemplo desde la consola con `python3 hola.py`, y nunca al importarlo como módulo.
 
 ******
 
@@ -430,7 +432,7 @@ Los tipos de datos integrados (built-in) son:
 
 ```
 Texto: str
-Nméricos: int, float, complex
+Numéricos: int, float, complex
 Colecciones: list, tuple, range
 Mapping Type: dict
 Set Types: set, frozenset
@@ -457,7 +459,7 @@ a = '''Estoy
 en múltiples
 líneas'''
 
-// ó...
+# ó...
 
 b = """Estoy
 en múltiples
@@ -609,4 +611,128 @@ a.pop("apellido") # elimina el elemento "apellido":"Ordóñez"
     - `d = {'a':1, 'b':2, 'c':3, 'd':4, 'e':5, 'f':6}`
 - ... obtenga este diccionario:
     - `{'a': 1, 'b': 9, 'd': 4, 'e': 5, 'f': 6, 'g': 8}`
+---
+
+***
+
+## Estructuras de control
+
+### If, Elif, Else
+
+`if` toma la forma:
+
+```python
+if <condición>:
+    <bloque-if-true>
+```
+
+`elif` toma la forma:
+
+```python
+if <condición>:
+    <bloque-if-true>
+elif <condición>:
+    <bloque-elif-true>
+elif <condición>:
+    <bloque-elif-true>
+# puede haber varios bloques elif
+```
+
+`else` toma la forma:
+
+```python
+if <condición>:
+    <bloque-if-true>
+elif <condición>:
+    <bloque-elif-true>
+# puede haber 0 o más bloques elif
+else:
+    <bloque-else>
+```
+
+### Match
+
+Equivalente a *switch* en otros lenguajes:
+
+```python
+match <variable>:
+    case <valor1>:
+        <bloque-si-valor1>
+    case <valor2>:
+        <bloque-si-valor2>
+    # los case que se necesite
+    case _:
+        <bloque-si-nada-más-se-ejecutó>
+```
+
+> El guión bajo en el case final captura cualquier valor, es el caso por defecto!
+
+### While
+
+`while` toma la forma:
+
+```python
+while <condición>:
+    <bloque-while-true>
+```
+
+### For
+
+`for` se usa para iterar sobre una colección y su forma de base es:
+
+```python
+for <variable> in <colección>:
+    <bloque-por-cada-elemento>
+```
+
+`break` se usa para terminar el lazo en cualquier momento:
+
+```python
+for <variable> in <colección>:
+    <bloque-por-cada-elemento>
+    if <condición> : break
+    <bloque-por-cada-elemento>
+```
+> si `<condición>` es verdadera, se sale del lazo inmediatamente
+
+`continue` se usa para terminar la iteración inmeditamente e iniciar la siguiente iteración:
+
+```python
+for <variable> in <colección>:
+    <bloque-por-cada-elemento>
+    if <condición> : continue
+    <bloque-por-cada-elemento>
+```
+
+> si `<condición>` es verdadera, se termina la iteración sin ejecutar el segundo bloque y se inicia la siguiente iteración
+
+`range(...)` se usa para generar una colección con una serie numérica que puede usar con `for`:
+
+```python
+for <variable> in range(ini, fin, salto):
+    <bloque-por-cada-elemento>
+```
+
+Ejemplos de colecciones producidas con range:
+
+```python
+range(2, 8, 2) # [2, 4, 6]
+range(2, 5) # [2, 3, 4]
+range(4) # [0, 1, 2, 3]
+```
+
+`else` se puede usar para ejecutar un bloque al finalizar el lazo:
+
+```python
+for <variable> in <colección>:
+    <bloque-por-cada-elemento>
+else:
+    <bloque-al-finalizar>
+```
+> si el lazo finaliza por un `break`, no se ejecuta el `else`
+
+---
+**Ejercicio:**
+
+Cree un programa que permita adivinar un número entre 1 y 100. El programa genera un número aleatorio y el usuario debe ingresar el número adecuado por el terminal. El programa emitirá mensajes de ayuda como "muy alto", "muy bajo" o "adivinó !!!".
 ---
