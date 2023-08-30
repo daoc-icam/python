@@ -863,23 +863,167 @@ writer.close()
 ---
 **Ejercicios**
 
-Abra el archivo *antes.txt*, cuyo contenido es:
-```
-12345
-67890
-12345
-67890
-```
+- Abra el archivo *antes.txt*, cuyo contenido es:
+    ```
+    12345
+    67890
+    12345
+    67890
+    ```
 
-modifíquelo para que su contenido sea:
+    modifíquelo para que su contenido sea:
 
-```
-09876
-54321
-09876
-54321
-```
+    ```
+    09876
+    54321
+    09876
+    54321
+    ```
 
-Y guárdelo en el archivo *despues.txt*
+    Y guárdelo en el archivo *despues.txt*
+
+- Modifique su programa de adivinar números para incluir un "log":
+    - por cada ejecución añada al archivo una línea con la fecha y hora de inicio, y el número que se debe adivinar
+    - por cada intento añada una línea con el índice del intento (si es el primero, segundo, tercero, ... intento), y con el número ingresado por el usuario
 
 ---
+
+*****
+
+## Funciones
+
+Las funciones son síncronas por defecto, se definen con `def` y se ejecutan por nombre, seguido de paréntesis con argumentos internos. Los argumentos se tratan como posicionales por defecto. Si la función debe devolver un valor se usa `return`:
+
+```python
+#definición
+def <nombre-función>(<parámetros>):
+    <bloque-de la función>
+    return <valor> #el return es optativo
+
+#ejecución
+<nombre-función>(<parámetros>) 
+```
+
+Si no se sabe el número exacto de argumentos que una función deberá recibir, se puede declarar un solo parámetro precedido de un asterisco(*), el cual será tratado como una lista de argumentos en el cuerpo de la función:
+
+```python
+#definición
+def mi_funcion(*args):
+    for arg in args:
+        print(arg)
+
+#ejecuciones válidas
+mi_funcion(1)
+mi_funcion(1, 2)
+mi_funcion(1, 2, 3) #... así sucesivamente
+```
+
+Los argumentos pueden tratarse como nombrados y se los puede enviar de la forma *nombre=valor*. En este caso no importa el orden en que se envíen:
+
+```python
+#definición
+def mi_funcion(uno, dos):
+    <bloque-de la función>
+
+#ejecuciones válidas
+mi_funcion(uno = 1, dos = 2)
+mi_funcion(dos = 2, uno = 1)
+```
+
+Si no se sabe el número exacto de argumentos nombrados que una función deberá recibir, se puede declarar un solo parámetro precedido de dos asteriscos(**), el cual será tratado como un diccionario de argumentos en el cuerpo de la función.
+
+Los parámetros pueden ser optativos si se los define con un valor por defecto, y solo pueden ir al final de la lista:
+
+```python
+#definición
+def mi_funcion(uno, dos = 2):
+    <bloque-de la función>
+
+#ejecuciones válidas
+mi_funcion(1) # dos = 2
+mi_funcion(1, 4) # dos = 4
+```
+
+#### Alcance
+
+En Python las variables son globales si se "declaran" (asignan valor por primera vez) fuera de las funciones, en el primer nivel del código. Una variable global puede ser usada dentro de una función.
+
+Las variables declaradas dentro de una función son locales, y no pueden ser usadas fuera de dicha función.
+
+Puede haber problemas si dentro de una función se trata de cambiar el valor de una variable global, como por ejemplo con un `miVariable += 1`. El compilador se quejará, pensando que la variable es local y no tiene ningún valor actual. Para resolver esto, dentro de la función es necesario declararla con `global` antes de usarla: `global miVariable`:
+
+```python
+miVariable = 0
+def miFuncion():
+    global miVariable # pruebe a comentar esta línea
+    miVariable += 1
+
+miFuncion()
+print(miVariable)
+```
+
+### Lambdas
+
+Una función lambda es una pequeña función anónima que puede ejecutar una sola expresión y devuelve el resultado de dicha expresión. Se define con `lambda`. Una lambda puede guardarse en una variable o devolverse en una función:
+
+```python
+lambda <parametros>: <expresión>
+
+#ejemplos
+x = lambda a: a * 2
+x(3) # 6
+
+def f(n):
+    return lambda a: a * n
+x = f(2)
+x(3) # 6
+```
+
+## Try (excepciones)
+
+`try` permite capturar y tratar excepciones que puedan producirse en un bloque de código. Generalmente va atada a la palabra clave `except`:
+
+```python
+try:
+    <bloque-resguardado>
+except <excepcion-a-capturar>:
+    <bloque-si-hay-excepción>
+```
+
+Si ocurre una excepción en el `try`, se salta directamente al `except`. Si no ocurre una excepción en el try, nunca se ejecuta el `except`. Puede haber varios bloques `except`, uno por cada tipo de excepción que se desee capturar.
+
+Opcionalmente puede haber un bloque `else` al final de todos los `except`, que se ejecutará solo si el `try` finaliza sin generar ninguna excepción:
+
+```python
+try:
+    <bloque-resguardado>
+except <excepcion-a-capturar>:
+    <bloque-si-hay-excepción>
+else:
+    <bloque-si-NO-hay-excepción>
+```
+
+También se puede añadir al final de todo un bloque `finally` que se ejecutará siempre, haya o no haya excepciones:
+
+```python
+try:
+    <bloque-resguardado>
+except <excepcion-a-capturar>:
+    <bloque-si-hay-excepción>
+else:
+    <bloque-si-NO-hay-excepción>
+finally:
+    <bloque-que-siempre-se-ejecuta>
+```
+
+---
+**Ejercicios**
+
+Modifique su programa para adivinar números de la siguiente manera:
+
+- cree una función que controle el `input` del usuario, verificando que haya ingresado un número válido. Mientras no sea así, se le volverá a pedir que ingrese un número. La función recibirá como argumentos el valor ingresado por el usuario y los valores límite del rango numérico, que deberán tener como valor por defecto 1 y 100. La función devolverá el número en el formato correcto (int)
+- cree una función que registre el log por intento. La función deberá recibir como argumentos: el archivo, el número ordinal del intento y el número ingresado por el usuario
+- integre estas dos funciones a su programa
+
+---
+
