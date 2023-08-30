@@ -992,6 +992,31 @@ except <excepcion-a-capturar>:
 
 Si ocurre una excepción en el `try`, se salta directamente al `except`. Si no ocurre una excepción en el try, nunca se ejecuta el `except`. Puede haber varios bloques `except`, uno por cada tipo de excepción que se desee capturar.
 
+```python
+# este ejemplo siempre dará error
+num = input("Enter number:")
+
+if num > 1:
+  print('no hubo error')
+else:
+  print('tampoco hubo error')
+```
+
+```python
+# en cambio este ejemplo...
+num = input("ingrese un número:")
+try:
+  if num > 1:
+    print('no hubo error')
+  else:
+    print('tampoco hubo error')
+except:
+  if int(num) > 1:
+    print('capturado error > 1')
+  else:
+    print('capturado error =< 1')
+```
+
 Opcionalmente puede haber un bloque `else` al final de todos los `except`, que se ejecutará solo si el `try` finaliza sin generar ninguna excepción:
 
 ```python
