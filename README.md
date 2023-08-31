@@ -1054,7 +1054,7 @@ Modifique su programa para adivinar números de la siguiente manera:
         - por cada intento, el número ordinal del intento y el número ingresado por el usuario
 - integre estas funciones en su programa
 
-> En el archivo `adivinar.py` tiene una plantilla de referencia que puede utilizar y modificar según su interpretación del problema
+> En el archivo `adivinar.py` tiene una plantilla de referencia que puede utilizar y modificar según su interpretación del problema. Ábralo directamente en [Google Colab](https://colab.research.google.com/drive/1FVqXEjMkyT6LBRfzaVVnEV2bDvPGF-Ub)
 
 ---
 
