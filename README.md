@@ -35,10 +35,13 @@ El lenguaje es dinámicamente tipado y soporta múltiples paradigmas de programa
 - Estructuras de control
     - If..., match, while, for
     - ranges
+
+### Sesión 4
+
 - Archivos
     - lectura,escritura, ...
 
-### Sesión 4
+### Sesión 5
 
 - Funciones
     - definición y declaración
@@ -47,39 +50,36 @@ El lenguaje es dinámicamente tipado y soporta múltiples paradigmas de programa
     - lambdas
 - Excepciones
 
-### Sesión 5
+### Sesiones 6 y 7
 
 - Clases y objetos
     - constructores
     - campos, métodos, alcance
-    - Fundamentos básicos de herencia
+    - Fundamentos de herencia
 
-### Sesión 6
-
-- Ejercicios para consolidar lo visto anteriormente
-
-### Sesión 7
+### Sesión 8
 
 - Fundamentos de Sockets TCP
     - clientes, servidores
 
-### Sesión 8
-
-- HTTP
-    - http.server (cgi)
-    - Fundamentos básicos de Flask
-
 ### Sesión 9
 
+- Fundamentos de HTTP
+    - http.server (cgi)
+    - Fundamentos de Flask
 - Fundamentos de HTML
-- Fundamentos básicos de CSS
+- Fundamentos de CSS
 
 ### Sesión 10
 
-- BDD (NoSQL)
+- Fundamentos de BDD (NoSQL)
     - Json
     - TinyDB
-    - Fundamentos básicos de  Redis
+    - Fundamentos de  Redis
+
+### Evaluación
+- se definirá una sesión posterior para una evaluación práctica
+
 ---
 
 ## Instalación y ejecución
@@ -1048,7 +1048,7 @@ Modifique su programa para adivinar números de la siguiente manera:
 
 - Cree una función principal que arranque su programa y que reciba como argumentos el rango de valores con el que trabajará
 - Cree una función que reciba y controle el `input` del usuario, verificando que haya ingresado un número válido. Mientras no sea así, se le volverá a pedir que ingrese un número. La función devolverá el número en el formato correcto (int)
-- Cree una función que registre el log del sistema. La función deberá recibir como argumentos: el archivo donde se guarda el log y el mensaje que se desea registrar en el log
+- Cree una función que registre el log del sistema. La función deberá recibir como argumentos: el archivo donde se guarda el log (el cual deberá haber sido abierto previamente) y el mensaje que se desea registrar en el log
     - su mensaje debería tener al menos
         - al arrancar el sistema, el timestamp y el número que se va a adivinar
         - por cada intento, el número ordinal del intento y el número ingresado por el usuario
