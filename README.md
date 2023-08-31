@@ -11,14 +11,14 @@ El lenguaje es dinámicamente tipado y soporta múltiples paradigmas de programa
 ---
 # Contenido
 
-### Sesión 1
+### [Sesión 1](#instalación-y-ejecución)
 
 - Entorno, instalación, configuración y ejecución
     - Python, Conda, VSCode, Google Colab
     - paquetes/librerías
     - imports
 
-### Sesión 2
+### [Sesión 2](#sintaxis)
 
 - Sintaxis
     - Instrucciones, indentación, comentarios
@@ -30,18 +30,18 @@ El lenguaje es dinámicamente tipado y soporta múltiples paradigmas de programa
     - Listas, tuplas, sets, diccionarios
     - índices, rebanadas
 
-### Sesión 3
+### [Sesión 3](#estructuras-de-control)
 
 - Estructuras de control
     - If..., match, while, for
     - ranges
 
-### Sesión 4
+### [Sesión 4](#archivos)
 
 - Archivos
     - lectura,escritura, ...
 
-### Sesión 5
+### [Sesión 5](#funciones)
 
 - Funciones
     - definición y declaración
