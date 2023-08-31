@@ -1046,9 +1046,15 @@ finally:
 
 Modifique su programa para adivinar números de la siguiente manera:
 
-- cree una función que controle el `input` del usuario, verificando que haya ingresado un número válido. Mientras no sea así, se le volverá a pedir que ingrese un número. La función recibirá como argumentos el valor ingresado por el usuario y los valores límite del rango numérico, que deberán tener como valor por defecto 1 y 100. La función devolverá el número en el formato correcto (int)
-- cree una función que registre el log por intento. La función deberá recibir como argumentos: el archivo, el número ordinal del intento y el número ingresado por el usuario
-- integre estas dos funciones a su programa
+- Cree una función principal que arranque su programa y que reciba como argumentos el rango de valores con el que trabajará
+- Cree una función que reciba y controle el `input` del usuario, verificando que haya ingresado un número válido. Mientras no sea así, se le volverá a pedir que ingrese un número. La función devolverá el número en el formato correcto (int)
+- Cree una función que registre el log del sistema. La función deberá recibir como argumentos: el archivo donde se guarda el log y el mensaje que se desea registrar en el log
+    - su mensaje debería tener al menos
+        - al arrancar el sistema, el timestamp y el número que se va a adivinar
+        - por cada intento, el número ordinal del intento y el número ingresado por el usuario
+- integre estas funciones en su programa
+
+> En el archivo `adivinar.py` tiene una plantilla de referencia que puede utilizar y modificar según su interpretación del problema
 
 ---
 
