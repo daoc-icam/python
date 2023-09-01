@@ -907,11 +907,13 @@ def <nombre-función>(<parámetros>):
 ```python
 #definición
 def aToThePowerOfB(a, b):
-    result = pow(a, b)
-    return resut
+    result = 1
+    for i in range(1,b+1):
+        result *= a
+    return result
 
 #ejecución
-value = aToThePowerOfB(2, 5)
+value = aToThePowerOfB(2, 4)
 print(value)
 ```
 
