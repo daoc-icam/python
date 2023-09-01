@@ -904,6 +904,17 @@ def <nombre-función>(<parámetros>):
 <nombre-función>(<parámetros>) 
 ```
 
+```python
+#definición
+def aToThePowerOfB(a, b):
+    result = pow(a, b)
+    return resut
+
+#ejecución
+value = aToThePowerOfB(2, 5)
+print(value)
+```
+
 Si no se sabe el número exacto de argumentos que una función deberá recibir, se puede declarar un solo parámetro precedido de un asterisco(*), el cual será tratado como una lista de argumentos en el cuerpo de la función:
 
 ```python
@@ -1054,7 +1065,7 @@ Modifique su programa para adivinar números de la siguiente manera:
         - por cada intento, el número ordinal del intento y el número ingresado por el usuario
 - integre estas funciones en su programa
 
-> En el archivo `adivinar.py` tiene una plantilla de referencia que puede utilizar y modificar según su interpretación del problema. Ábralo directamente en [Google Colab](https://colab.research.google.com/drive/1FVqXEjMkyT6LBRfzaVVnEV2bDvPGF-Ub) (Recuerde hacer `File\Save a copy in Drive` antes de empezar a modificar el archivo)
+> En el archivo `adivinar.py` tiene una plantilla de referencia que puede utilizar y modificar según su interpretación del problema. Ábra la plantilla directamente en [Google Colab](https://colab.research.google.com/drive/1FVqXEjMkyT6LBRfzaVVnEV2bDvPGF-Ub) (Recuerde hacer `File\Save a copy in Drive` antes de empezar a modificar el archivo)
 
 ---
 
