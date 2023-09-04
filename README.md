@@ -57,7 +57,7 @@ El lenguaje es dinámicamente tipado y soporta múltiples paradigmas de programa
     - campos, métodos, alcance
     - Fundamentos de herencia
 
-### Sesión 8
+### [Sesión 8](#sockets)
 
 - Fundamentos de Sockets TCP
     - clientes, servidores
@@ -1184,3 +1184,49 @@ class Persona(Humano):
 - Cree una clase para el programa de adivinar números. Imagine una estructura y póngala en práctica!
 
 ---
+
+## Sockets
+
+Como cualquier lenguaje de programación, Python proporcionan utilidades para establecer conexión con otras aplicaciones mediante el protocolo TCP/IP. El API fundamental para esto es la de sockets. En Python este tipo de sockets se suele referenciar como *INET* de tipo *STREAM*, y trabajan en el conocido modelo cliente-servidor.
+
+### Socket servidor
+
+Un socket servidor acepta conexiones de varios clientes, y puede intercambiar información con ellos de la siguiente manera:
+
+```python
+import socket
+
+servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+servidor.bind(('localhost', 8080))
+servidor.listen()
+
+while True:
+    cliente, address = servidor.accept()
+    while True:
+        data = cliente.recv(256)
+        if not data:
+            cliente.close()
+            break
+        cliente.sendall(data.upper())
+```
+> Primero se crea un socket TCP y se lo ata a la interfaz local del equipo y al puerto 8080. Se pone al servidor en modo de escucha o recepción de clientes, y luego se entra en un lazo infinito para recibir dichos clientes. Para recibir un cliente el servidor debe ejecutar el método accept, el cual devolverá el socket para comunicarse con dicho cliente, y su dirección (ip y puerto desde el que se conecta). Luego el servidor indica que recibirá hasta 256 bytes del cliente y espera que llegue la información. Mientras no llege la información desde el cliente, el servidor queda bloqueado. Luego se verifica que haya llegado información, caso contrario significa que la conexión se cerró (ya no hay nada que recibir) y se cierra dicho socket, pasando nuevamente al modo accept. Si se recibió información, simplemente se la devuelve al cliente convertida en mayúsculas (hace un típico eco).
+> > Este servidor acepta un solo cliente a la vez! Si desea trabajar con varios clientes simultaneamente deberá usar hilos (o algún otro mecanismo... busque alternativas !!!)
+
+### Socket cliente
+
+Un socket cliente se conecta con un servidor y puede intercambiar información con aquel, de la siguiente manera:
+
+```python
+import socket
+
+cliente = socket.socket()
+cliente.connect(('localhost', 8080))
+
+while True:
+    data = input('Ingrese dato: ')
+    cliente.sendall(str.encode(data))
+    print(bytes.decode(cliente.recv(256)))
+```
+
+> Primero se crea un socket TCP (es el default, por eso no se está poniendo parámetros en el ejemplo). Luego se conecta con el servidor indicando su dirección y puerto de escucha (del servidor!). A continuación, para efectos del ejemplo, se está pidiendo al cliente que ingreses un valor, el cual se envía por el socket. el `str.encode` es por que el dato debe enviarse como bytes y no como string. Finalmente se reciben hasta 256 de respuesta, se convierten en string y se imprime en consola.
+>> Si se quiere cerrar el cliente se puede usar Ctrl+C
