@@ -50,7 +50,7 @@ El lenguaje es dinámicamente tipado y soporta múltiples paradigmas de programa
     - lambdas
 - Excepciones
 
-### Sesiones 6 y 7
+### [Sesiones 6 y 7](#clases)
 
 - Clases y objetos
     - constructores
@@ -1070,4 +1070,109 @@ Modifique su programa para adivinar números de la siguiente manera:
 > En el archivo `adivinar.py` tiene una plantilla de referencia que puede utilizar y modificar según su interpretación del problema. Abra la plantilla directamente en [Google Colab](https://colab.research.google.com/drive/1FVqXEjMkyT6LBRfzaVVnEV2bDvPGF-Ub) (Recuerde hacer `File\Save a copy in Drive` antes de empezar a modificar el archivo)
 
 ---
+
+## Clases
+
+Una clase permite definir nuevos tipos de objetos y se crea con la palabra clave `class`:
+
+```python
+class <nombre-clase>:
+    <bloque-de-instrucciones>
+```
+
+Las instrucciones dentro de una clase suelen ser inicialización de variables estáticas o definición de funciones. Ej:
+
+```python
+class Persona:
+    nombre = 'Diego'
+
+    def getNombre():
+        return 'Mi nombre es ' + Persona.nombre
+```
+
+> En este caso tanto la variable como el método son estáticos y pueden ser accedidos como `Persona.nombre` o `Persona.getNombre()`
+
+Si se desea crear objetos de instancia, para las variables esto es automático: el valor de la variable estática se copia a la variable de la instancia con el msmo nombre. En el caso de los métodos de instancia, estos deben llevar `self` como primer (o único) argumento. `self` hace referencia a la instancia del objeto que se ha creado.
+
+> El nombre "self" es una convención, la variable podría tener otro nombre, pero esto podría llevar a confusión, de manera que se recomienda usar "self".
+
+```python
+class Persona:
+    nombre = 'Diego'
+
+    def getNombre(self):
+        return 'Mi nombre es ' + self.nombre
+```
+
+Para crear una nueva instancia de una clase se usa su nombre seguido de paréntesis:
+
+```python
+p = Persona()
+p.getNombre() # Mi nombre es Diego
+```
+
+> Atención! las variables estáticas y las de instancia son independientes. Al crear la instancia se copian los datos desde las variables estáticas, pero a partir de ahí dejan de estar ligadas. Pruebe el siguiente código y verá:
+
+```python
+class Persona:
+    nombre = 'Diego'
+
+p = Persona()
+print(Persona.nombre)
+print(p.nombre)
+p.nombre = 'María'
+print(Persona.nombre)
+print(p.nombre)
+Persona.nombre = 'Juan'
+print(Persona.nombre)
+print(p.nombre)
+```
+
+Se puede inicializar una instancia de clase con su método `__init__` (es el "constructor"):
+
+```python
+class Persona:
+    def __init__(self, nombre):
+        self.nombre = nombre
+    def getNombre(self):
+        return 'Mi nombre es ' + self.nombre
+
+p = Persona('María')
+p.getNombre() # Mi nombre es María
+```
+
+> Las variables de clase no hace falta declararlas. Se crean en cuanto se usan la primera vez: `self.nombre = nombre`
+
+### Alcance
+
+Las variables de clase en Python son siempre públicas, no existen variables privadas. Sin embargo, una convención es indicar que una variable debe ser tratada como privada, poniendo un guión bajo al inicio de su nombre: `_privada` (igual se puede acceder a la variables desde fuera!).
+
+### Herencia
+
+Si desea que su nueva clase herede las propiedades de otra, indique la clase madre entre paréntesis:
+
+```python
+class Persona(Humano):
+    ...
+```
+
+En Python existe la herencia múltiple:
+
+```python
+class Persona(Humano, Animal, SerVivo):
+    ...
+```
+
+> Al buscar alguna propiedad, primero se busca en Persona, luego en Humano (y sus clases madre), luego en Animal (y sus clases madre) y así sucesivamente.
+
+### Documentación
+
+Se puede incluir documentación en una clase poniéndola en comillas triples (simples o dobles):
+
+```python
+class Persona(Humano):
+    '''Esta es mi documentación de clase'''
+    ...
+```
+ La documentación se accede con la propiedad `__doc__`: `Persona.__doc__` o `p.__doc__`
 
