@@ -1230,3 +1230,11 @@ while True:
 
 > Primero se crea un socket TCP (es el default, por eso no se está poniendo parámetros en el ejemplo). Luego se conecta con el servidor indicando su dirección y puerto de escucha (del servidor!). A continuación, para efectos del ejemplo, se está pidiendo al cliente que ingreses un valor, el cual se envía por el socket. el `str.encode` es por que el dato debe enviarse como bytes y no como string. Finalmente se reciben hasta 256 de respuesta, se convierten en string y se imprime en consola.
 >> Si se quiere cerrar el cliente se puede usar Ctrl+C
+
+---
+
+**Ejercicios**
+
+Cree un programa cliente-servidor por sockets, que le permita al cliente adivinar el número que tiene el servidor
+
+---
