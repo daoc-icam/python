@@ -1177,3 +1177,10 @@ class Persona(Humano):
 ```
  La documentación se accede con la propiedad `__doc__`: `Persona.__doc__` o `p.__doc__`
 
+---
+
+**Ejercicios**
+
+- Cree una clase para el programa de adivinar números. Imagine una estructura y póngala en práctica!
+
+---
