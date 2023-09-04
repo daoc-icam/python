@@ -1069,6 +1069,7 @@ Modifique su programa para adivinar números de la siguiente manera:
 
 > En el archivo `adivinar.py` tiene una plantilla de referencia que puede utilizar y modificar según su interpretación del problema. Abra la plantilla directamente en [Google Colab](https://colab.research.google.com/drive/1FVqXEjMkyT6LBRfzaVVnEV2bDvPGF-Ub) (Recuerde hacer `File\Save a copy in Drive` antes de empezar a modificar el archivo)
 
+> Si, luego de haberlo intentado por su cuenta, quiere ver otra solución posible, vaya al archivo [adivinarResuelto.py](adivinarResuelto.py)
 ---
 
 ## Clases
