@@ -50,19 +50,19 @@ El lenguaje es dinámicamente tipado y soporta múltiples paradigmas de programa
     - lambdas
 - Excepciones
 
-### [Sesiones 6 y 7](#clases)
+### [Sesión 6](#clases)
 
 - Clases y objetos
     - constructores
     - campos, métodos, alcance
     - Fundamentos de herencia
 
-### [Sesión 8](#sockets)
+### [Sesión 7](#sockets)
 
 - Fundamentos de Sockets TCP
     - clientes, servidores
 
-### Sesión 9
+### [Sesiones 8 y 9](#http)
 
 - Fundamentos de HTTP
     - http.server (cgi)
@@ -1238,3 +1238,103 @@ while True:
 Cree un programa cliente-servidor por sockets, que le permita al cliente adivinar el número que tiene el servidor
 
 ---
+
+## HTTP
+
+El Hyper Text Transfer Protocol, HTTP, es el protocolo de la web. Este tutorial se enfoca en el uso de python para crear aplicaciones web. Sin embargo, si necesita conocimientos más generales al respecto, revise https://github.com/daoc-web/web.
+
+Python proporciona facilidades para crear programas que actúen como clientes o servidores HTTP, permitiendo así generar aplicaciones web. Se va a mencionar a continuación las opciones incluidas en las librerías de base integradas con Python. Estas librerías, si bien permitirían crear cualquier aplicación web, se consideran más bien de bajo nivel. Si, por ejemplo, se desea crear aplicaciones web de mayor complejidad, sería preferible utilizar frameworks como [Flask](https://palletsprojects.com/p/flask/) o [Django](https://www.djangoproject.com/).
+
+### Cliente HTTP
+
+Para crear un cliente http puede utilizarse la librería [http.client](https://docs.python.org/es/3/library/http.client.html). Los dos tipos de objetos para la conexión son `HTTPConnection` o `HTTPSConnection`, dependiendo de si se va a conectar con un servidor seguro o no. A continuación un pequeño ejemplo de cliente http:
+
+```python
+import http.client
+
+conn = http.client.HTTPConnection("localhost", 8080)
+conn.request("GET", "/index.html")
+response = conn.getresponse()
+print(response.status, response.reason)
+print(response.read())
+```
+
+>- Luego de importar la librería necesaria, el primer paso es crear la conexión, que en este caso se realizará con protocolo no seguro a un servidor ejecutándose en el mismo equipo del cliente y en el puerto 8080. Si el servidor corre en el puerto estándar (en el caso de http, 80), no hace falta el segundo parámetro. Si se deseara efectuar la conexión con un servidor seguro, bastará con usar: `http.client.HTTPSConnection("localhost")`
+>- Ya con la conexión creada, se procede a efectuar la petición (`request`), indicando el método HTTP (en este caso `GET`), y el recurso que se solicita (`/index.html`)
+>- A continuación se espera la respuesta (`response`) del servidor, se la procesa y se la presenta al usuario:
+>   - `status` presentarà el còdigo `200` si todo saliò bien
+>   - `reason` muestra el mensaje `OK` ligado al código `200`
+>   - `read()` finalmente recupera el cuerpo de la respuesta
+
+### Servidor HTTP
+
+Para crear un servidor http puede utilizarse la librería [http.server](https://docs.python.org/es/3/library/http.server.html). Dos modos de base puede mencionarse: pre-programado y personalizado.
+
+#### Pre-programado
+
+El modo más sencillo es ejecutar directamente un servidor http para entregar contenido estático. Para esto simplemente se debe ir a la línea de comando y ejecutar:
+
+```
+python3 -m http.server 8080
+```
+
+>- Esta instrucción iniciará un servidor http que entregará como recursos los archivos que se encuentren en el directorio actual (aquel desde el cual se ejecutó la instrucción). En el ejemplo el servidor escuchará en el puerto 8080, si no se especifica un puerto, el puerto por defecto es el 8000.
+>- Si se desea, se puede indicar otro directorio con la opción `-d /otro/directorio`
+
+#### Personalizado
+
+Este modo implica crear nuestro propio servidor HTTP, extendiendo la clase [`BaseHTTPRequestHandler`](https://docs.python.org/es/3/library/http.server.html#http.server.BaseHTTPRequestHandler). Al extender la clase, se deberá sobreescribir, según las necesidades, alguno de los métodos `do_<método>(self)`, donde *\<método\>* se refiere al método HTTP que se capturará, como `do_GET` o `do_POST`. Para procesar la `request` y la `response`, se usarán los métodos y variables en `self` (la instancia de `BaseHTTPRequestHandler`). Un ejemplo a continuación:
+
+```python {.line-numbers}
+from http.server import HTTPServer, BaseHTTPRequestHandler
+from urllib.parse import urlparse, parse_qs
+
+class Controlador(BaseHTTPRequestHandler):
+
+    def do_GET(self):
+        parametros = parse_qs(urlparse(self.path).query)
+        cliente = self.client_address
+        fecha = self.date_time_string()
+
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html;charset=UTF-8")
+        self.end_headers()
+        data = f'''
+        <html>
+            <head>
+                <title>Mi HTTP Personalizado</title>
+            </head>
+            <body>
+                <h1>{cliente}</h1>
+                <h2>{fecha}</h2>
+                <h3>{parametros}</h3>
+            </body
+        </html>
+        '''
+        self.wfile.write(data.encode())
+
+if __name__ == '__main__':
+    server = HTTPServer(("0.0.0.0", 8080), Controlador)
+    server.serve_forever()
+```
+
+>- L.1 importa las dos clases de base para crear y ejecutar el servidor
+>- L.2 importa las clases para procesar la URL y extraer la query string (ver L.7)
+>- L.3 crea la clase personalizada `Controlador` que extiende `BaseHTTPRequestHandler`
+>- L.6 extiende do_GET para proporcionar una respuesta específica al recibir peticiones por GET
+>- L.7 extrae los parámetros recibidos en la query string (si los hay)
+>- L.8 obtiene la IP del cliente y el puerto por el que se conectó
+>- L.9 recupera el timestamp de la petición
+>- L11 a L.13 son prácticamente obligatorios para cumplir con HTTP. L11 envía el código de respuesta `200 OK`, L.12 envía el encabezado indicando el tipo de contenido. Por cada encabezado adicional que se deba enviar se puede incluir otro `self.send_header`. Al terminar de enviar todos los encabezados, y antes de enviar el cuerpo del mensaje, se cierra en L.13
+>- Entre L.14 y L.25 se crea el cuerpo del mensaje en una "string formateada" (o plantilla, si prefiere)
+>- L.26 envía el cuerpo del mensaje como `response`. `wfile` es un puntero a la "output stream" del socket tcp suyacente a la conexión (es un objeto tipo archivo, es decir una stream de bytes). Por `wfile` no se puede enviar un objeto string sino solo un flujo de bytes, razón por la cual se usa `encode()`
+>- Finalmente se ejecuta el código. L.29 crea el objeto servidor, que escuchará en todas las interfaces (0.0.0.0) y en el puerto 8080. L.30 pone el servidor en modo recepción de clientes.
+
+### Html
+
+Vaya al siguiente link: https://github.com/daoc-web/html
+
+### Css
+
+Vaya al siguiente link: https://github.com/daoc-web/css/blob/main/CSS.md
+
