@@ -1330,6 +1330,20 @@ if __name__ == '__main__':
 >- L.26 envía el cuerpo del mensaje como `response`. `wfile` es un puntero a la "output stream" del socket tcp suyacente a la conexión (es un objeto tipo archivo, es decir una stream de bytes). Por `wfile` no se puede enviar un objeto string sino solo un flujo de bytes, razón por la cual se usa `encode()`
 >- Finalmente se ejecuta el código. L.29 crea el objeto servidor, que escuchará en todas las interfaces (0.0.0.0) y en el puerto 8080. L.30 pone el servidor en modo recepción de clientes.
 
+---
+
+**Ejercicios**
+
+Va a modificar su programa servidor TCP para adivinar números, para convertirlo en un servidor HTTP, de acuerdo a las condiciones siguientes (su programa cliente será su browser):
+- cada vez que un cliente se conecte sin enviar el argumento `num`, genere el número aleatorio y lo guarde en un archivo
+    > esto es necesario para saber cuál es el número por adivinar en las siguientes peticiones del cliente, dado que los servidores HTTP por defecto, se "olvidan de todo" al terminar una petición
+    
+    >un ejemplo de esta petición será: `http://localhost:8080`
+- cuando el cliente haga una petición con el argumento `num` (que se espera sea un número!), el servidor abrirá el archivo, leerá el número, y efectuará las comparaciones para responderle al usuario según corresponda
+    > un ejemplo de esta petición será: `http://localhost:8080?num=34`
+
+---
+
 ### Html
 
 Vaya al siguiente link: https://github.com/daoc-web/html
