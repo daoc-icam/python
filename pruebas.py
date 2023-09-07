@@ -7,24 +7,15 @@ class Controlador(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parametros = parse_qs(urlparse(self.path).query)
-        cliente = self.client_address
-        fecha = self.date_time_string()
 
         self.send_response(200)
         self.send_header("Content-Type", "text/html;charset=UTF-8")
         self.end_headers()
-        data = f'''
-        <html>
-            <head>
-                <title>Mi HTTP Personalizado</title>
-            </head>
-            <body>
-                <h1>{cliente}</h1>
-                <h2>{fecha}</h2>
-                <h3>{parametros}</h3>
-            </body
-        </html>
-        '''
+
+        a = int(parametros['a'][0])
+        b = int(parametros['b'][0])
+
+        data = f'''{a} * {b} = {a*b}'''
         self.wfile.write(data.encode())
 
 if __name__ == '__main__':
